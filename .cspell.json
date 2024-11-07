@@ -1,0 +1,24 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "degit",
+    "esbuild",
+    "webapp-scanner",
+    "octocat",
+    "outdir",
+    "rmrf",
+    "ryansonshine",
+    "socio",
+    "tsdoc",
+    "rebackk"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "package.json",
+    "package-lock.json",
+    "yarn.lock",
+    "tsconfig.json",
+    "node_modules/**"
+  ]
+}
