@@ -2,7 +2,6 @@
   "name": "sentinel-scanner",
   "description": "[WIP] An open-source web app vulnerability scanner developed by Rebackk.",
   "version": "0.0.0-development",
-  "type": "module",
   "exports": "./build/index.js",
   "types": "./build/index.d.ts",
   "bin": "./build/index.js",
