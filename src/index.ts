@@ -9,9 +9,9 @@ const program = new Command();
 
 // Set version, name, and description from the package.json
 program
-  .version(packageData.version)
-  .name(packageData.name)
-  .description(packageData.description);
+	.version(packageData.version)
+	.name(packageData.name)
+	.description(packageData.description);
 
 // Add a help command explicitly if needed
 program.helpOption("-h, --help", "Display help for command");
@@ -23,5 +23,5 @@ const options = program.opts();
 
 // If no arguments are provided, display help
 if (Object.keys(options).length === 0) {
-  program.help();
+	program.help();
 }
