@@ -1,27 +1,86 @@
 #!/usr/bin/env node
 
-import { Command } from "commander";
-// @ts-ignore: For TypeScript compatibility when importing JSON files
-import packageData from "../package.json";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+import { SpiderScanner } from "./modules";
 
-// Create a new Command object
-const program = new Command();
+const commandHandler = yargs(hideBin(process.argv));
 
-// Set version, name, and description from the package.json
-program
-	.version(packageData.version)
-	.name(packageData.name)
-	.description(packageData.description);
+/**
+ * Command to scan for XSS vulnerabilities
+ *
+ * @param {string} url - URL to scan
+ * @param {string} wordlist - Path to wordlist file
+ * @returns {void}
+ *
+ * @example
+ * npx sentinel-scanner xss --url https://example.com
+ */
+commandHandler.command(
+	"xss",
+	"Scan for XSS vulnerabilities",
+	{
+		url: {
+			describe: "URL to scan",
+			demandOption: true,
+			type: "string",
+			coerce: (value) => {
+				try {
+					new URL(value);
+					return value;
+				} catch (err) {
+					throw new Error("Invalid URL format");
+				}
+			},
+		},
+		wordlist: {
+			describe: "Path to wordlist file",
+			type: "string",
+		},
+	},
+	(argv) => {
+		console.log("Scanning for XSS vulnerabilities...");
+		console.log(`URL: ${argv.url}`);
+		console.log(`Wordlist: ${argv.wordlist || "Default"}`);
+	},
+);
 
-// Add a help command explicitly if needed
-program.helpOption("-h, --help", "Display help for command");
+// Command to Spider a website
+commandHandler.command(
+	"spider",
+	"Scan a website for vulnerabilities",
+	{
+		url: {
+			describe: "URL to scan",
+			demandOption: true,
+			type: "string",
+			coerce: (value) => {
+				try {
+					new URL(value);
+					return value;
+				} catch (err) {
+					throw new Error("Invalid URL format");
+				}
+			},
+		},
+	},
+	(argv) => {
+		const spider = new SpiderScanner(argv.url);
 
-// Parse command-line arguments
-program.parse(process.argv);
+		spider.crawl().then((output) => {
+			console.log(
+				JSON.stringify(
+					{
+						forms: output.forms,
+						links: output.links,
+					},
+					null,
+					2,
+				),
+			);
+		});
+	},
+);
 
-const options = program.opts();
-
-// If no arguments are provided, display help
-if (Object.keys(options).length === 0) {
-	program.help();
-}
+// Parse arguments and handle commands
+commandHandler.parse();

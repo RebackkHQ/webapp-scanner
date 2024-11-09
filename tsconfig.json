@@ -2,13 +2,12 @@
   "include": ["./src/**/*.ts"],
   "compilerOptions": {
     "lib": ["es2023"],
-    "module": "nodenext",
+    "module": "ESNext",
     "target": "es2022",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
 
     "rootDir": "./src",
     "outDir": "build",
-    "resolvePackageJsonImports": true,
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -19,6 +18,12 @@
     "declaration": true,
     "resolveJsonModule": true,
     "emitDeclarationOnly": true,
+
+    // These two options can help resolve ESM issues
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+
+    // Ensure TypeScript recognizes .ts file extensions in ESM
     "allowImportingTsExtensions": true
   }
 }

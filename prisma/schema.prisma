@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/scanner.db"
+}
+
+model Crawl {
+  id        Int      @id @default(autoincrement())
+  url       String   @unique
+  timestamp DateTime @default(now())
+  links     Link[]
+  forms     Form[]
+}
+
+model Link {
+  id      Int    @id @default(autoincrement())
+  url     String
+  crawlId Int
+  crawl   Crawl  @relation(fields: [crawlId], references: [id])
+}
+
+model Form {
+  id      Int    @id @default(autoincrement())
+  fields  String
+  crawlId Int
+  crawl   Crawl  @relation(fields: [crawlId], references: [id])
+}
