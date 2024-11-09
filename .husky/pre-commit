@@ -1,0 +1,11 @@
+# .husky/pre-commit
+# Fetch staged files and run biome check with formatting
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+
+# Run biome only if there are staged files
+if [ -n "$STAGED_FILES" ]; then
+  biome check $STAGED_FILES --write --unsafe
+  git update-index --again
+else
+  echo "No files to check."
+fi

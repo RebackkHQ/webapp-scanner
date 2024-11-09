@@ -8,10 +8,13 @@
     "octocat",
     "outdir",
     "rmrf",
-    "ryansonshine",
     "socio",
     "tsdoc",
-    "rebackk"
+    "rebackk",
+    "wordlist",
+    "khtml",
+    "hrefs",
+    "ACMR"
   ],
   "flagWords": [],
   "ignorePaths": [
