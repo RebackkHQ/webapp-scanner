@@ -28,7 +28,7 @@
     "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types ./scripts/test.ts test",
     "test:watch": "node --disable-warning=ExperimentalWarning --experimental-strip-types ./scripts/test.ts test:watch",
     "test:coverage": "node --disable-warning=ExperimentalWarning --experimental-strip-types ./scripts/test.ts test:coverage",
-    "spell:check": "cspell \"{README.md,CODE_OF_CONDUCT.md,CONTRIBUTING.md,.github/*.md,src/**/*.ts}\"",
+    "spell:check": "cspell \"{DISCLAIMER.md,README.md,CODE_OF_CONDUCT.md,CONTRIBUTING.md,.github/*.md,src/**/*.ts}\"",
     "cz": "cz",
     "semantic-release": "semantic-release",
     "postinstall": "prisma generate",

@@ -50,6 +50,18 @@ Happy Scanning! 🛡️
 ## Contributing 🤝
 If you want to help us building the best status page and alerting system, you can check our [contributing guidelines](./CODE_OF_CONDUCT.md)
 
+## Disclaimer
+
+By using Sentinel, you agree to the terms outlined in our [DISCLAIMER](./DISCLAIMER.md). It is **strongly recommended** that you read the disclaimer thoroughly before using this tool. 
+
+**Key points include:**
+
+- Only scan systems for which you have explicit permission.
+- The tool is provided "as is" without any warranties.
+- The company is not liable for any misuse, damages, or legal issues arising from the use of this tool.
+
+You can find the full disclaimer [here](./DISCLAIMER.md).
+
 ---
 
 **This is a work in progress project**
