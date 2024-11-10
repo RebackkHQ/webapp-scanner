@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import fs from "node:fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { SpiderScanner } from "./modules";
