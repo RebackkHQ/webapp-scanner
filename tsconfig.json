@@ -2,13 +2,13 @@
   "include": ["./src/**/*.ts"],
   "compilerOptions": {
     "lib": ["es2023"],
-    "module": "nodenext",
+    "module": "CommonJS",
     "target": "es2022",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
 
     "rootDir": "./src",
     "outDir": "build",
-    "resolvePackageJsonImports": true,
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -18,7 +18,7 @@
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "resolveJsonModule": true,
-    "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": true
-  }
+    "allowImportingTsExtensions": false
+  },
+  "exclude": ["src/__tests__/**/*"]
 }

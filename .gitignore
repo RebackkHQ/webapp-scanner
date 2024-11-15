@@ -13,3 +13,10 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+# Database
+data/
+*.db
+
+# Output
+sentinel_output/

@@ -23,7 +23,6 @@ async function buildDts(): Promise<void> {
   const time = Date.now();
 
   const { stderr } = await execFile("tsc", [
-    "--emitDeclarationOnly",
     "--project",
     "tsconfig.build.json",
   ]);
@@ -63,8 +62,12 @@ async function build(): Promise<void> {
     sourcemap: true,
     external: [],
     bundle: true,
-    entryPoints: [path.join(srcPath, "index.ts")],
+    entryPoints: [
+      path.join(srcPath, "index.ts"),
+      path.join(srcPath, "bin.ts"),
+    ],
     outdir: buildPath,
+    packages: "external",
   });
 
   // biome-ignore lint/suspicious/noConsoleLog: script file
