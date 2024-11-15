@@ -18,7 +18,6 @@
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "resolveJsonModule": true,
-    "emitDeclarationOnly": true,
     "allowImportingTsExtensions": false
   },
   "exclude": ["src/__tests__/**/*"]
