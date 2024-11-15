@@ -13,7 +13,7 @@
   </h3>
   <p align="center">
     <a href="https://www.sentinel.rebackk.xyz">
-        <img src='./.github/assets/header.png'>
+        <img src='https://raw.githubusercontent.com/RebackkHQ/webapp-scanner/main/.github/assets/header.png'>
     </a>
   </a>
   </p>
