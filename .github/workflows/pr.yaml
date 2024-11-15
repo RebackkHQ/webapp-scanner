@@ -1,0 +1,86 @@
+name: "check PR"
+
+on: [push]
+
+permissions: "write-all"
+
+jobs:
+  dependencies:
+    name: 📦 Dependencies
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: "npm"
+      - run: npm ci
+
+  lint:
+    name: 🔬 Lint & Format
+    runs-on: macos-latest
+    needs: [dependencies]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: "npm"
+      - run: npm ci
+      - name: 🔬 Lint & Format
+        run: node --run lint:check
+
+  audit:
+    name: 🛡️ Audit
+    runs-on: macos-latest
+    needs: [dependencies]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: "npm"
+      - name: 🛡️ Audit
+        run: npm audit --audit-level=high
+
+  spell:
+    name: 🈸 Spellcheck
+    runs-on: macos-latest
+    needs: [dependencies]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: "npm"
+      - run: npm ci
+      - name: 🈸 Spellcheck
+        run: node --run spell:check
+
+  type:
+    name: ʦ Typecheck
+    runs-on: macos-latest
+    needs: [dependencies]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: "npm"
+      - run: npm ci
+      - name: ʦ Typecheck
+        run: node --run type:check
+
+  test:
+    name: ⚡ Tests
+    runs-on: macos-latest
+    needs: [dependencies]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: "npm"
+      - run: npm ci
+      - name: ⚡ Tests
+        run: node --run test:coverage

@@ -2,7 +2,14 @@
   <h1 align="center">
     Sentinel By Rebackk (Work in progress)
     <br />
-    <img src="https://github.com/RebackkHQ/webapp-scanner/actions/workflows/webapp-scanner.yml/badge.svg" style="padding: 15px;" />
+    <img src="https://img.shields.io/github/actions/workflow/status/RebackkHQ/webapp-scanner/.github%2Fworkflows%2Fwebapp-scanner.yml" style="padding-top: 15px;" />
+    <img src="https://img.shields.io/github/contributors/RebackkHQ/webapp-scanner" style="padding-top: 15px;" />
+    <img src="https://img.shields.io/github/issues-raw/RebackkHQ/webapp-scanner" style="padding-top: 15px;" />
+    <img src="https://img.shields.io/github/v/release/RebackkHQ/webapp-scanner?include_prereleases" style="padding-top: 15px;" />
+    <img src="https://img.shields.io/npm/dw/sentinel-scanner" style="padding-top: 15px;" />
+    <div>
+      <img src="https://img.shields.io/github/stars/RebackkHQ/webapp-scanner" style="padding-top: 15px;" />
+    </div>
   </h3>
   <p align="center">
     <a href="https://www.sentinel.rebackk.xyz">

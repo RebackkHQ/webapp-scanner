@@ -2,9 +2,10 @@
   "include": ["./src/**/*.ts"],
   "compilerOptions": {
     "lib": ["es2023"],
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "es2022",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
 
     "rootDir": "./src",
     "outDir": "build",
@@ -18,12 +19,7 @@
     "declaration": true,
     "resolveJsonModule": true,
     "emitDeclarationOnly": true,
-
-    // These two options can help resolve ESM issues
-    "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
-
-    // Ensure TypeScript recognizes .ts file extensions in ESM
-    "allowImportingTsExtensions": true
-  }
+    "allowImportingTsExtensions": false
+  },
+  "exclude": ["src/__tests__/**/*"]
 }

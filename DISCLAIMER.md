@@ -60,5 +60,5 @@ This Disclaimer shall be governed by and construed in accordance with the laws o
 
 If you have any questions, concerns, or require further clarification regarding this Disclaimer, please contact us at:
 
-Email: **legal@esportzvio.com**
-Address: **Esportzvio Private Limited, Muzaffarpur, Bihar, 842001, India.**
+- Email: **legal@esportzvio.com**
+- Address: **Esportzvio Private Limited, Muzaffarpur, Bihar, 842001, India.**

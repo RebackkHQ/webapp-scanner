@@ -62,7 +62,10 @@ async function build(): Promise<void> {
     sourcemap: true,
     external: [],
     bundle: true,
-    entryPoints: [path.join(srcPath, "index.ts")],
+    entryPoints: [
+      path.join(srcPath, "index.ts"),
+      path.join(srcPath, "bin.ts"),
+    ],
     outdir: buildPath,
     packages: "external",
   });

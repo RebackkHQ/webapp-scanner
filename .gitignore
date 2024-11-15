@@ -17,3 +17,6 @@ logs/
 # Database
 data/
 *.db
+
+# Output
+sentinel_output/
