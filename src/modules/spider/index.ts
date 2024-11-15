@@ -1,31 +1,43 @@
 import fetch from "isomorphic-fetch";
 import jsdom from "jsdom";
 import UserAgent from "user-agents";
-import Logger from "../../lib/logger";
+import { createLogger } from "../../utils";
 
-export type FormOutput = {
-	id: number;
-	url: string;
-	fields: Array<{ name: string; id: string; class: string; type: string }>;
-};
-
-export type CrawlOutput = {
-	links: string[];
-	forms: FormOutput[];
-};
+export interface SpiderScannerOptions {
+	depth?: number;
+	concurrency?: number;
+	retries?: number;
+	timeout?: number;
+}
 
 export default class SpiderScanner {
 	private header: Record<string, string> = {
 		"User-Agent": new UserAgent().toString(),
 	};
 	private url: URL;
-	private logger = new Logger("Spider");
+	private logger = createLogger("SpiderScanner");
 
-	constructor(url: string) {
+	private depth: number;
+	private concurrency: number;
+	private retries: number;
+	private timeout: number;
+
+	constructor(url: string, options: SpiderScannerOptions = {}) {
+		const {
+			depth = 250,
+			concurrency = 5,
+			retries = 3,
+			timeout = 5000,
+		} = options;
+		this.depth = depth;
+		this.concurrency = concurrency;
+		this.retries = retries;
+		this.timeout = timeout;
+
 		try {
 			this.url = new URL(url);
 			this.logger.info(
-				`Initialized with URL: ${url} & User-Agent: ${this.header["User-Agent"]}`,
+				`Initialized with URL: ${url}, User-Agent: ${this.header["User-Agent"]}`,
 			);
 		} catch (error) {
 			if (error instanceof TypeError) {
@@ -37,7 +49,6 @@ export default class SpiderScanner {
 		}
 	}
 
-	// Normalize domains (removes 'www.')
 	private normalizeDomain(domain: string): string {
 		return domain.startsWith("www.") ? domain.slice(4) : domain;
 	}
@@ -61,20 +72,42 @@ export default class SpiderScanner {
 		}
 	}
 
-	private async fetchUrl(url: string): Promise<string | null> {
-		try {
-			this.logger.debug(`Fetching URL: ${url}`);
-			const response = await fetch(url, { headers: this.header });
-			if (!response.ok) {
+	private async fetchWithRetries(
+		url: string,
+		retries: number,
+	): Promise<string | null> {
+		for (let attempt = 1; attempt <= retries; attempt++) {
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+			try {
+				this.logger.debug(`Fetching URL (Attempt ${attempt}): ${url}`);
+				const randomUserAgent = new UserAgent().toString();
+				this.logger.info(`Changing User-Agent to: ${randomUserAgent}`);
+				this.header["User-Agent"] = randomUserAgent;
+				const response = await fetch(url, {
+					headers: this.header,
+					signal: controller.signal,
+					redirect: "follow",
+				});
+
+				clearTimeout(timeoutId);
+
+				if (response.ok) {
+					this.logger.info(`Successfully fetched URL: ${url}`);
+					return await response.text();
+				}
+
 				this.logger.warn(`Failed to fetch URL (${response.status}): ${url}`);
-				return null;
+			} catch (error) {
+				if ((error as Error).name === "AbortError") {
+					this.logger.warn(`Fetch timed out: ${url}`);
+				} else {
+					this.logger.error(`Error fetching URL: ${url} - ${error}`);
+				}
 			}
-			this.logger.info(`Successfully fetched URL: ${url}`);
-			return await response.text();
-		} catch (error) {
-			this.logger.error(`Error fetching URL: ${url} - ${error}`);
-			return null;
 		}
+		return null;
 	}
 
 	private extractLinks(html: string): string[] {
@@ -89,36 +122,40 @@ export default class SpiderScanner {
 		return internalLinks.map((link) => this.convertRelativeUrlToAbsolute(link));
 	}
 
-	private extractForms(html: string): FormOutput[] {
-		const { JSDOM } = jsdom;
-		const dom = new JSDOM(html);
-		const forms = Array.from(dom.window.document.querySelectorAll("form"));
-		this.logger.debug(`Extracted ${forms.length} forms from HTML content`);
-
-		return forms.map((form, index) => {
-			const fields = Array.from(form.querySelectorAll("input")).map(
-				(input) => ({
-					name: input.name,
-					id: input.id,
-					class: input.className,
-					type: input.type,
-				}),
-			);
-
-			return {
-				id: index,
-				url: this.url.href,
-				fields,
-			};
-		});
-	}
-
-	// Main function to scan the website with concurrency support and return both links and forms
-	public async crawl(depth = 250, concurrency = 5): Promise<CrawlOutput> {
+	public async crawl(): Promise<Array<string>> {
 		const visited = new Set<string>();
 		const queue = new Set<string>([this.url.href]);
 		const resultLinks = new Set<string>();
-		const resultForms = new Set<FormOutput>();
+
+		// Assets to ignore
+		const assetExtensions = [
+			".css",
+			".js",
+			".png",
+			".jpg",
+			".jpeg",
+			".gif",
+			".svg",
+			".ico",
+			".webp",
+			".mp4",
+			".mp3",
+			".wav",
+			".avi",
+			".mov",
+			".webm",
+			".pdf",
+			".doc",
+			".docx",
+			".xls",
+			".xlsx",
+			".ppt",
+			".pptx",
+			".zip",
+			".rar",
+			".tar",
+			".gz",
+		];
 
 		const fetchAndExtract = async (currentUrl: string) => {
 			if (visited.has(currentUrl)) {
@@ -128,19 +165,22 @@ export default class SpiderScanner {
 			visited.add(currentUrl);
 			this.logger.info(`Visiting URL: ${currentUrl}`);
 
-			const html = await this.fetchUrl(currentUrl);
+			const html = await this.fetchWithRetries(currentUrl, this.retries);
 			if (!html) return;
 
-			// Extract links and forms
 			const links = this.extractLinks(html);
-			const forms = this.extractForms(html);
 
-			for (const form of forms) {
-				resultForms.add(form);
+			// Filter out asset links
+			for (const link of links) {
+				if (assetExtensions.some((ext) => link.endsWith(ext))) {
+					this.logger.debug(`Ignoring asset link: ${link}`);
+					continue;
+				}
+				this.logger.debug(`Found link: ${link}`);
 			}
 
 			for (const link of links) {
-				if (!visited.has(link) && queue.size < depth) {
+				if (!visited.has(link) && queue.size < this.depth) {
 					queue.add(link);
 					this.logger.debug(`Added to queue: ${link}`);
 				}
@@ -149,7 +189,7 @@ export default class SpiderScanner {
 		};
 
 		const processBatch = async () => {
-			const batch = Array.from(queue).slice(0, concurrency);
+			const batch = Array.from(queue).slice(0, this.concurrency);
 			for (const url of batch) {
 				queue.delete(url);
 			}
@@ -157,19 +197,16 @@ export default class SpiderScanner {
 		};
 
 		this.logger.info(
-			`Starting crawl with depth: ${depth}, concurrency: ${concurrency}`,
+			`Starting crawl with depth: ${this.depth}, concurrency: ${this.concurrency}`,
 		);
-		while (queue.size > 0 && visited.size < depth) {
+		while (queue.size > 0 && visited.size < this.depth) {
 			await processBatch();
 		}
 
 		this.logger.info(
-			`Crawling completed. Total pages visited: ${resultLinks.size}, Total forms found: ${resultForms.size}`,
+			`Crawling completed. Total pages visited: ${resultLinks.size}`,
 		);
 
-		return {
-			links: Array.from(resultLinks),
-			forms: Array.from(resultForms),
-		};
+		return Array.from(resultLinks);
 	}
 }
