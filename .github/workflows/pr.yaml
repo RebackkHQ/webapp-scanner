@@ -1,6 +1,10 @@
 name: "check PR"
 
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
+      - alpha
 
 permissions: "write-all"
 
