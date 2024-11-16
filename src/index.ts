@@ -1,3 +1,5 @@
-import SpiderScanner, { type SpiderScannerOptions } from "./modules/spider";
+import SpiderScanner, {
+	type SpiderScannerOptions,
+} from "./modules/spider/index.js";
 
 export { SpiderScanner, type SpiderScannerOptions };
