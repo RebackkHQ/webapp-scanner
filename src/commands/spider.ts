@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { ArgumentsCamelCase, CommandModule } from "yargs";
-import SpiderScanner from "../modules/spider";
-import { createLogger } from "../utils";
+import SpiderScanner from "../modules/spider/index.js";
+import { createLogger } from "../utils/index.js";
 
 export type SpiderScannerCLIOptions = {
 	url: string;

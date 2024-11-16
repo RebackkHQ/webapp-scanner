@@ -2,7 +2,7 @@
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { spiderCommand } from "./commands/spider";
+import { spiderCommand } from "./commands/spider.js";
 
 const commandHandler = yargs(hideBin(process.argv));
 
