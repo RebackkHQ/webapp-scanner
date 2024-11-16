@@ -2,10 +2,9 @@
   "include": ["./src/**/*.ts"],
   "compilerOptions": {
     "lib": ["es2023"],
-    "module": "CommonJS",
+    "module": "nodenext",
     "target": "es2022",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "nodenext",
 
     "rootDir": "./src",
     "outDir": "build",
@@ -17,8 +16,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
-    "resolveJsonModule": true,
-    "allowImportingTsExtensions": false
-  },
-  "exclude": ["src/__tests__/**/*"]
+    "declarationMap": true,
+    "resolveJsonModule": true
+  }
 }

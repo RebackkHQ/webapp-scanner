@@ -1,7 +1,6 @@
-import fetch from "isomorphic-fetch";
 import jsdom from "jsdom";
 import UserAgent from "user-agents";
-import { createLogger } from "../../utils";
+import { createLogger } from "../../utils/index.js";
 
 export interface SpiderScannerOptions {
 	depth?: number;
@@ -85,10 +84,10 @@ export default class SpiderScanner {
 				const randomUserAgent = new UserAgent().toString();
 				this.logger.info(`Changing User-Agent to: ${randomUserAgent}`);
 				this.header["User-Agent"] = randomUserAgent;
+
 				const response = await fetch(url, {
 					headers: this.header,
 					signal: controller.signal,
-					redirect: "follow",
 				});
 
 				clearTimeout(timeoutId);
