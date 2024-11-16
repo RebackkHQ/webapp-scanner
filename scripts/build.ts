@@ -4,7 +4,6 @@ import path from "node:path";
 import { promisify } from "node:util";
 import { build as esbuild } from "esbuild";
 import { rimraf } from "rimraf";
-import { polyfillNode } from "esbuild-plugin-polyfill-node";
 
 const execFile = promisify(execFileSync);
 
