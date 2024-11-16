@@ -1,0 +1,10 @@
+title: Sentinel by Rebackk
+description: Open Source Web App Vulnerability Scanner
+baseurl: "/webapp-scanner"
+url: "https://rebackkhq.github.io"
+theme: minima
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
