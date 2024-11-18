@@ -17,7 +17,7 @@ jobs:
         with:
           node-version-file: package.json
           cache: "npm"
-      - run: npm ci
+      - run: npm ci && npm install -g better-npm-audit
 
   lint:
     name: 🔬 Lint & Format
@@ -31,7 +31,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       - name: 🔬 Lint & Format
-        run: node --run lint:check
+        run: npm run lint:check
 
   audit:
     name: 🛡️ Audit
@@ -43,8 +43,10 @@ jobs:
         with:
           node-version-file: package.json
           cache: "npm"
+      - name: Install better-npm-audit
+        run: npm install -g better-npm-audit
       - name: 🛡️ Audit
-        run: npm audit --audit-level=high
+        run: npm run audit
 
   spell:
     name: 🈸 Spellcheck
@@ -58,7 +60,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       - name: 🈸 Spellcheck
-        run: node --run spell:check
+        run: npm run spell:check
 
   type:
     name: ʦ Typecheck
@@ -72,7 +74,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       - name: ʦ Typecheck
-        run: node --run type:check
+        run: npm run type:check
 
   build-and-release:
     name: 🚀 Build & release
@@ -86,9 +88,9 @@ jobs:
           cache: "npm"
       - run: npm ci
       - name: 🔨 Build
-        run: node --run build
+        run: npm run build
       - name: 🚀 Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: node --run semantic-release
+        run: npm run semantic-release

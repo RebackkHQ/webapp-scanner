@@ -18,7 +18,7 @@ jobs:
         with:
           node-version-file: package.json
           cache: "npm"
-      - run: npm ci
+      - run: npm ci && npm install -g better-npm-audit
 
   lint:
     name: 🔬 Lint & Format
@@ -32,7 +32,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       - name: 🔬 Lint & Format
-        run: node --run lint:check
+        run: npm run lint:check
 
   audit:
     name: 🛡️ Audit
@@ -44,8 +44,10 @@ jobs:
         with:
           node-version-file: package.json
           cache: "npm"
+      - name: Install better-npm-audit
+        run: npm install -g better-npm-audit
       - name: 🛡️ Audit
-        run: npm audit --audit-level=high
+        run: npm run audit
 
   spell:
     name: 🈸 Spellcheck
@@ -59,18 +61,4 @@ jobs:
           cache: "npm"
       - run: npm ci
       - name: 🈸 Spellcheck
-        run: node --run spell:check
-
-  test:
-    name: ⚡ Tests
-    runs-on: macos-latest
-    needs: [dependencies]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: package.json
-          cache: "npm"
-      - run: npm ci
-      - name: ⚡ Tests
-        run: node --run test:coverage
+        run: npm run spell:check

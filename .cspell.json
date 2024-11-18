@@ -29,7 +29,11 @@
     "webapp-scanner",
     "wordlist",
     "xlink",
-    "workerpool"
+    "workerpool",
+    "nosniff",
+    "joomla",
+    "clickjacking",
+    "SAMEORIGIN"
   ],
   "flagWords": [],
   "ignorePaths": [
