@@ -25,9 +25,9 @@
     "type:check": "tsc --noEmit",
     "lint": "biome check . --write --unsafe",
     "lint:check": "biome ci .",
-    "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types ./scripts/test.ts test",
-    "test:watch": "node --disable-warning=ExperimentalWarning --experimental-strip-types ./scripts/test.ts test:watch",
-    "test:coverage": "node --disable-warning=ExperimentalWarning --experimental-strip-types ./scripts/test.ts test:coverage",
+    "test": "npm run build && ava src/__tests__/*.ts",
+    "test:watch": "npm run build && ava src/__tests__/*.ts --watch",
+    "test:coverage": "npm run build && ava src/__tests__/*.ts --coverage",
     "spell:check": "cspell \"{DISCLAIMER.md,README.md,CODE_OF_CONDUCT.md,CONTRIBUTING.md,.github/*.md,src/**/*.ts}\"",
     "cz": "cz",
     "semantic-release": "semantic-release",
@@ -48,8 +48,11 @@
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.9.0",
     "@types/prompts": "^2.4.9",
+    "@types/puppeteer": "^5.4.7",
     "@types/user-agents": "^1.0.4",
     "@types/yargs": "^17.0.33",
+    "ae-cvss-calculator": "^1.0.2",
+    "ava": "^6.2.0",
     "c8": "^10.1.2",
     "cspell": "^8.15.7",
     "cz-conventional-changelog": "^3.3.0",
@@ -57,6 +60,8 @@
     "husky": "^9.1.6",
     "rimraf": "^6.0.1",
     "semantic-release": "^24.2.0",
+    "threads": "^1.7.0",
+    "tiny-worker": "^2.3.0",
     "typescript": "^5.4.2",
     "winston": "^3.17.0"
   },
@@ -66,9 +71,8 @@
     }
   },
   "dependencies": {
-    "axios": "^1.7.7",
-    "isomorphic-fetch": "^3.0.0",
     "jsdom": "^25.0.1",
+    "puppeteer": "^23.8.0",
     "user-agents": "^1.1.359",
     "yargs": "^17.7.2"
   }
