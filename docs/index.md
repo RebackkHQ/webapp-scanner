@@ -66,9 +66,10 @@ By using Sentinel, you agree to our [DISCLAIMER]({{ site.url }}{{ site.baseurl }
 ## 📄 Detailed Documentation
 
 - [Introduction]({{ site.url }}{{ site.baseurl }})
-- [Scoring System]({{ site.url }}{{ site.baseurl }}/scoring/)
+- [Scoring System]({{ site.url }}{{ site.baseurl }}/scoring)
 - [Spider Scanner]({{ site.url }}{{ site.baseurl }}/spider/)
-- [Full Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer/)
+- [XSS Scanner]({{ site.url }}{{ site.baseurl }}/xss/)
+- [Full Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer)
 
 <div align="center">
   <a href="https://www.sentinel.rebackk.xyz" class="btn btn-primary">Get Started »</a>

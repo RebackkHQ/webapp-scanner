@@ -3,6 +3,7 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { spiderCommand } from "./commands/spider.js";
+import { xssCommand } from "./commands/xss.js";
 
 const commandHandler = yargs(hideBin(process.argv));
 
@@ -16,5 +17,6 @@ commandHandler.showHelpOnFail(true);
 
 // Handle Commands
 commandHandler.command(spiderCommand);
+commandHandler.command(xssCommand);
 
 commandHandler.parse();

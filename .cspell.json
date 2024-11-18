@@ -28,7 +28,8 @@
     "tsdoc",
     "webapp-scanner",
     "wordlist",
-    "xlink"
+    "xlink",
+    "workerpool"
   ],
   "flagWords": [],
   "ignorePaths": [
