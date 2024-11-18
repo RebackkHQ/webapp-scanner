@@ -45,7 +45,7 @@
     "@semantic-release/github": "^10.3.5",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.1",
-    "@types/axios": "^0.9.36",
+    "@types/axios": "^0.14.4",
     "@types/isomorphic-fetch": "^0.0.39",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.9.0",
