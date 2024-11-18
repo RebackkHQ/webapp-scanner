@@ -18,7 +18,7 @@ jobs:
         with:
           node-version-file: package.json
           cache: "npm"
-      - run: npm ci
+      - run: npm ci && npm install -g better-npm-audit
 
   lint:
     name: 🔬 Lint & Format
