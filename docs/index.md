@@ -68,6 +68,7 @@ By using Sentinel, you agree to our [DISCLAIMER]({{ site.url }}{{ site.baseurl }
 - [Introduction]({{ site.url }}{{ site.baseurl }})
 - [Scoring System]({{ site.url }}{{ site.baseurl }}/scoring)
 - [Spider Scanner]({{ site.url }}{{ site.baseurl }}/spider/)
+- [XSS Scanner]({{ site.url }}{{ site.baseurl }}/xss/)
 - [Full Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer)
 
 <div align="center">
