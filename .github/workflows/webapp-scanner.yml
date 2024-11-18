@@ -44,7 +44,7 @@ jobs:
           node-version-file: package.json
           cache: "npm"
       - name: 🛡️ Audit
-        run: npm audit --audit-level=high
+        run: node --run audit
 
   spell:
     name: 🈸 Spellcheck
