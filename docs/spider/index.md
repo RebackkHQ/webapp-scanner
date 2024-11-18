@@ -1,3 +1,7 @@
+---
+layout: default
+title: Sentinel by Rebackk | Spider Intro
+---
 # 🕷️ Spider
 
 A powerful and customizable web crawler designed to scan websites and extract internal links. This tool is capable of handling concurrency, retries, and timeouts while providing detailed logging for each step. It can be easily used via a CLI command.
