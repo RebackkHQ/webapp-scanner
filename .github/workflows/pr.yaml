@@ -44,6 +44,8 @@ jobs:
         with:
           node-version-file: package.json
           cache: "npm"
+      - name: Install better-npm-audit
+        run: npm install -g better-npm-audit
       - name: 🛡️ Audit
         run: npm run audit
 
