@@ -1,3 +1,7 @@
+---
+layout: default
+title: Sentinel by Rebackk | Disclaimer
+---
 # DISCLAIMER
 
 Last Updated: **10/11/2024**

@@ -50,11 +50,11 @@ Sentinel is an open-source web app vulnerability scanner developed by [Rebackk](
 
 ## Contributing 🤝
 
-We welcome contributions! If you want to help us build the best web vulnerability scanner, check our [contributing guidelines](./CODE_OF_CONDUCT.md). Feel free to submit issues and pull requests.
+We welcome contributions! If you want to help us build the best web vulnerability scanner, check our [contributing guidelines](https://github.com/RebackkHQ/webapp-scanner?tab=coc-ov-file). Feel free to submit issues and pull requests.
 
 ## Disclaimer
 
-By using Sentinel, you agree to our [DISCLAIMER](./DISCLAIMER.md). Please read it carefully before using the tool.
+By using Sentinel, you agree to our [DISCLAIMER]({{ site.url }}{{ site.baseurl }}/disclaimer). Please read it carefully before using the tool.
 
 **Key points:**
 - Scan only systems you have explicit permission to test.
@@ -66,8 +66,9 @@ By using Sentinel, you agree to our [DISCLAIMER](./DISCLAIMER.md). Please read i
 ## 📄 Detailed Documentation
 
 - [Introduction]({{ site.url }}{{ site.baseurl }})
-- [Spider Scanner]({{ site.url }}{{ site.baseurl }}/spider/index.md)
-- [Full Disclaimer]({{ site.url }}{{ site.baseurl }}/DISCLAIMER.md)
+- [Scoring System]({{ site.url }}{{ site.baseurl }}/scoring)
+- [Spider Scanner]({{ site.url }}{{ site.baseurl }}/spider/)
+- [Full Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer)
 
 <div align="center">
   <a href="https://www.sentinel.rebackk.xyz" class="btn btn-primary">Get Started »</a>
