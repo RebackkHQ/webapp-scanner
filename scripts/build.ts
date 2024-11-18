@@ -63,15 +63,16 @@ async function build(): Promise<void> {
     platform: "node",
     format: "esm",
     nodePaths: [srcPath],
-    sourcemap: true,
+    sourcemap: false,
     external: [],
     bundle: true,
     entryPoints: [path.join(srcPath, "index.ts"), path.join(srcPath, "bin.ts")],
     outdir: buildPath,
     footer: {
-      js: "// @RebackkHQ/webapp-scanner",
+      js: "// https://github.com/RebackkHQ/webapp-scanner",
     },
     inject: [path.resolve("./scripts/extras/document-shim.js")],
+    minify: true,
   });
 
   // biome-ignore lint/suspicious/noConsoleLog: script file
