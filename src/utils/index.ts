@@ -57,6 +57,7 @@ const getLevelOfVulnerability = (
 
 export const createLogger = (label: string) =>
 	winston.createLogger({
+		level: "silly",
 		levels: {
 			error: 0,
 			warn: 1,
