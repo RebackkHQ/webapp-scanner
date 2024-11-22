@@ -35,7 +35,9 @@
     "webapp-scanner",
     "wordlist",
     "workerpool",
-    "xlink"
+    "xlink",
+    "Npgsql",
+    "JDBC"
   ],
   "flagWords": [],
   "ignorePaths": [
