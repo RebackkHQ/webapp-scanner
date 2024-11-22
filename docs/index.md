@@ -66,14 +66,13 @@ By using Sentinel, you agree to our [DISCLAIMER]({{ site.url }}{{ site.baseurl }
 ## 📄 Detailed Documentation
 
 - [Introduction]({{ site.url }}{{ site.baseurl }})
-- [XSS Scanner]({{ site.url }}{{ site.baseurl }}/xss/)
-  - [Usage]({{ site.url }}{{ site.baseurl }}/xss/)
-  - [Details]({{ site.url }}{{ site.baseurl }}/xss/details)
-- [HTTP Headers Scanner]({{ site.url }}{{ site.baseurl }}/headers/)
-  - [Usage]({{ site.url }}{{ site.baseurl }}/headers/)
-  - [Details]({{ site.url }}{{ site.baseurl }}/headers/details)
 - [Spider Scanner]({{ site.url }}{{ site.baseurl }}/spider/)
-  - [Usage]({{ site.url }}{{ site.baseurl }}/spider/)
+- [XSS Scanner]({{ site.url }}{{ site.baseurl }}/xss/)
+  - [Vulnerability Details]({{ site.url }}{{ site.baseurl }}/xss/details)
+- [HTTP Headers Scanner]({{ site.url }}{{ site.baseurl }}/headers/)
+  - [Vulnerability Details]({{ site.url }}{{ site.baseurl }}/headers/details)
+- [SQL Injection Scanner]({{ site.url }}{{ site.baseurl }}/sql-injection/)
+  - [Vulnerability Details]({{ site.url }}{{ site.baseurl }}/sql-injection/details)
 - [Scoring]({{ site.url }}{{ site.baseurl }}/scoring/)
 - [Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer/)
 
