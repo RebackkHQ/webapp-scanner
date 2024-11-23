@@ -166,14 +166,9 @@ export default class XSSScanner {
 							const description =
 								"Payload was reflected on dialog message. People can inject malicious code into the website.";
 
-							const { score, level } = generateCVSS({
-								accessVector: "A",
-								accessComplexity: "H",
-								attackRequirements: "P",
-								privilegesRequired: "L",
-								userInteraction: "A",
-								confidentialityImpact: "L",
-							});
+							const { baseScore: score, severity: level } = generateCVSS(
+								"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:L",
+							);
 
 							const sameVulnerability = this.vulnerabilities.find(
 								(vulnerability) => vulnerability.description === description,
@@ -213,14 +208,10 @@ export default class XSSScanner {
 							);
 							const description =
 								"Payload was reflected on the console. People can inject malicious code into the website.";
-							const { score, level } = generateCVSS({
-								accessVector: "A",
-								accessComplexity: "H",
-								attackRequirements: "P",
-								privilegesRequired: "L",
-								userInteraction: "A",
-								confidentialityImpact: "L",
-							});
+
+							const { baseScore: score, severity: level } = generateCVSS(
+								"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:L",
+							);
 
 							const sameVulnerability = this.vulnerabilities.find(
 								(vulnerability) => vulnerability.description === description,
@@ -262,14 +253,9 @@ export default class XSSScanner {
 						const description =
 							"Payload was reflected on content as it is. People can inject malicious code into the website.";
 
-						const { score, level } = generateCVSS({
-							accessVector: "A",
-							accessComplexity: "H",
-							attackRequirements: "P",
-							privilegesRequired: "L",
-							userInteraction: "A",
-							confidentialityImpact: "L",
-						});
+						const { baseScore: score, severity: level } = generateCVSS(
+							"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:L",
+						);
 
 						const sameVulnerability = this.vulnerabilities.find(
 							(vulnerability) => vulnerability.description === description,

@@ -183,26 +183,23 @@ export default class SqliScanner {
 
 						this.logger.info(`Database: ${dbms}`);
 
-						const cvssScore = generateCVSS({
-							accessVector: "N",
-							accessComplexity: "L",
-							attackRequirements: "P",
-							privilegesRequired: "N",
-							userInteraction: "A",
-							confidentialityImpact: "H",
-						});
-
-						this.logger.info(
-							`CVSS Score: ${cvssScore.score} (${cvssScore.level})`,
+						const cvssScore = generateCVSS(
+							"CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
 						);
 
+						console.info(`\x1b${JSON.stringify(cvssScore)}\x1b[0m`);
+
 						this.vulnerabilities.push({
-							type: cvssScore.level,
-							severity: cvssScore.score,
+							type: cvssScore.severity,
+							severity: cvssScore.baseScore,
 							url,
 							description: `Potential SQL Injection vulnerability found on ${url} with payload: ${payload} and database: ${dbms}. This can be exploited to perform unauthorized actions on the database.`,
 							payloads: [payload],
 						});
+
+						this.logger.info(
+							`CVSS Score: ${cvssScore.baseScore} (${cvssScore.severity})`,
+						);
 					}
 				}
 
@@ -336,25 +333,20 @@ export default class SqliScanner {
 								`Potential SQL Injection vulnerability found on ${url}`,
 							);
 
-							const cvssScore = generateCVSS({
-								accessVector: "N",
-								accessComplexity: "L",
-								attackRequirements: "P",
-								privilegesRequired: "N",
-								userInteraction: "P",
-								confidentialityImpact: "H",
-							});
+							const cvssScore = generateCVSS(
+								"CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+							);
 
 							this.vulnerabilities.push({
-								type: cvssScore.level,
-								severity: cvssScore.score,
+								type: cvssScore.severity,
+								severity: cvssScore.baseScore,
 								url,
 								description: `Potential SQL Injection vulnerability found on ${url} with payload: ${payload} and database: ${dbms}. This can be exploited to perform unauthorized actions on the database.`,
 								payloads: [payload],
 							});
 
 							this.logger.info(
-								`CVSS Score: ${cvssScore.score} (${cvssScore.level})`,
+								`CVSS Score: ${cvssScore.baseScore} (${cvssScore.severity})`,
 							);
 
 							this.logger.info(`Database: ${dbms}`);
@@ -377,11 +369,23 @@ export default class SqliScanner {
 						);
 
 						if (postDbms.isVulnerable) {
-							this.logger.warn(
-								`Potential SQL Injection vulnerability found on ${url}`,
+							const cvssScore = generateCVSS(
+								"CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
 							);
 
-							this.logger.info(`Database: ${postDbms.dbms}`);
+							this.vulnerabilities.push({
+								type: cvssScore.severity,
+								severity: cvssScore.baseScore,
+								url,
+								description: `Potential SQL Injection vulnerability found on ${url} with payload: ${payload} and database: ${dbms}. This can be exploited to perform unauthorized actions on the database.`,
+								payloads: [payload],
+							});
+
+							this.logger.info(
+								`CVSS Score: ${cvssScore.baseScore} (${cvssScore.severity})`,
+							);
+
+							this.logger.info(`Database: ${dbms}`);
 						}
 					}
 				}

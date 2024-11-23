@@ -73,8 +73,8 @@ By using Sentinel, you agree to our [DISCLAIMER]({{ site.url }}{{ site.baseurl }
   - [Vulnerability Details]({{ site.url }}{{ site.baseurl }}/headers/details)
 - [SQL Injection Scanner]({{ site.url }}{{ site.baseurl }}/sql-injection/)
   - [Vulnerability Details]({{ site.url }}{{ site.baseurl }}/sql-injection/details)
-- [Scoring]({{ site.url }}{{ site.baseurl }}/scoring/)
-- [Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer/)
+- [Scoring]({{ site.url }}{{ site.baseurl }}/scoring/
+- [Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer)
 
 <div align="center">
   <a href="https://www.sentinel.rebackk.xyz" class="btn btn-primary">Get Started »</a>
