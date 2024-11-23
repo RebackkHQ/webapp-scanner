@@ -4,6 +4,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { headerCommand } from "./commands/header.js";
 import { spiderCommand } from "./commands/spider.js";
+import { sqliCommand } from "./commands/sqli.js";
 import { xssCommand } from "./commands/xss.js";
 
 const commandHandler = yargs(hideBin(process.argv));
@@ -20,5 +21,7 @@ commandHandler.showHelpOnFail(true);
 commandHandler.command(spiderCommand);
 commandHandler.command(xssCommand);
 commandHandler.command(headerCommand);
+commandHandler.command(sqliCommand);
 
+commandHandler.version();
 commandHandler.parse();

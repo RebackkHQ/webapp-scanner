@@ -118,43 +118,19 @@ export default class SpiderScanner {
 		this.logger.debug(
 			`Extracted ${internalLinks.length} internal links from HTML content`,
 		);
-		return internalLinks.map((link) => this.convertRelativeUrlToAbsolute(link));
+		const assetRegex = new RegExp(
+			/https?:\/\/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}\/(?:[^ ]*\.(?:jpg|jpeg|png|gif|css|js|svg|woff|woff2|ttf|eot|ico|mp4|webp|pdf))/,
+		);
+
+		return internalLinks
+			.map((link) => this.convertRelativeUrlToAbsolute(link))
+			.filter((link) => !assetRegex.test(link));
 	}
 
 	public async crawl(): Promise<Array<string>> {
 		const visited = new Set<string>();
 		const queue = new Set<string>([this.url.href]);
 		const resultLinks = new Set<string>();
-
-		// Assets to ignore
-		const assetExtensions = [
-			".css",
-			".js",
-			".png",
-			".jpg",
-			".jpeg",
-			".gif",
-			".svg",
-			".ico",
-			".webp",
-			".mp4",
-			".mp3",
-			".wav",
-			".avi",
-			".mov",
-			".webm",
-			".pdf",
-			".doc",
-			".docx",
-			".xls",
-			".xlsx",
-			".ppt",
-			".pptx",
-			".zip",
-			".rar",
-			".tar",
-			".gz",
-		];
 
 		const fetchAndExtract = async (currentUrl: string) => {
 			if (visited.has(currentUrl)) {
@@ -168,15 +144,6 @@ export default class SpiderScanner {
 			if (!html) return;
 
 			const links = this.extractLinks(html);
-
-			// Filter out asset links
-			for (const link of links) {
-				if (assetExtensions.some((ext) => link.endsWith(ext))) {
-					this.logger.debug(`Ignoring asset link: ${link}`);
-					continue;
-				}
-				this.logger.debug(`Found link: ${link}`);
-			}
 
 			for (const link of links) {
 				if (!visited.has(link) && queue.size < this.depth) {
