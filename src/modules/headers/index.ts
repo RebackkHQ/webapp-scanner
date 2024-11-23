@@ -3,6 +3,17 @@ import { generateCVSS } from "../../utils/index.js";
 import { createLogger } from "../../utils/index.js";
 import { informationLeakChecks, securityChecks } from "./headers.js";
 
+const DEFAULT_CVSS_BASE = {
+	attackVector: "N",
+	attackComplexity: "L",
+	privilegesRequired: "N",
+	userInteraction: "N",
+	scope: "U",
+	confidentialityImpact: "N",
+	integrityImpact: "N",
+	availabilityImpact: "N",
+};
+
 export type HeaderScannerOptions = {
 	spiderResults: Array<string>;
 	retries?: number;
@@ -84,14 +95,9 @@ export default class HeaderScanner {
 				const value = headers.get(header.name);
 				if (!value) {
 					// handle Missing Security Headers
-					const { score, level } = generateCVSS({
-						accessVector: "N",
-						accessComplexity: "L",
-						attackRequirements: "N",
-						privilegesRequired: "N",
-						userInteraction: "N",
-						confidentialityImpact: "N",
-					});
+					const { baseScore: score, severity: level } = generateCVSS(
+						"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+					);
 
 					this.vulnerabilities.push({
 						type: level,
@@ -107,14 +113,9 @@ export default class HeaderScanner {
 
 				if (!check) {
 					// handle Insecure value for header
-					const { score, level } = generateCVSS({
-						accessVector: "N",
-						accessComplexity: "L",
-						attackRequirements: "N",
-						privilegesRequired: "N",
-						userInteraction: "N",
-						confidentialityImpact: "N",
-					});
+					const { baseScore: score, severity: level } = generateCVSS(
+						"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+					);
 
 					this.vulnerabilities.push({
 						type: level,
@@ -139,14 +140,9 @@ export default class HeaderScanner {
 
 				if (!check) {
 					// handle Insecure value for header
-					const { score, level } = generateCVSS({
-						accessVector: "N",
-						accessComplexity: "L",
-						attackRequirements: "N",
-						privilegesRequired: "N",
-						userInteraction: "N",
-						confidentialityImpact: "N",
-					});
+					const { baseScore: score, severity: level } = generateCVSS(
+						"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+					);
 
 					this.vulnerabilities.push({
 						type: level,

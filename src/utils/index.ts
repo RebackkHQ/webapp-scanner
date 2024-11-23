@@ -1,35 +1,96 @@
-import { Cvss4P0 } from "ae-cvss-calculator";
+import {
+	EnvironmentalMetric,
+	type Metric,
+	type MetricValue,
+	TemporalMetric,
+	type ValidationResult,
+	calculateBaseScore,
+	calculateExploitability,
+	calculateImpact,
+	calculateIss,
+	humanizeBaseMetric,
+	humanizeBaseMetricValue,
+	validate,
+} from "cvssify";
 import winston from "winston";
 
-export const generateCVSS = ({
-	accessVector,
-	accessComplexity,
-	attackRequirements,
-	privilegesRequired,
-	userInteraction,
-}: {
-	accessVector:
-		| "N"
-		| "A"
-		| "L"
-		| "P" /**  N: Network, A: Adjacent, L: Local, P: Physical */;
-	accessComplexity: "L" | "H" /** L: Low, H: High */;
-	attackRequirements: "N" | "P" /** N: None, P: Present */;
-	privilegesRequired: "N" | "L" | "H" /** N: None, L: Low, H: High */;
-	userInteraction: "N" | "P" | "A" /** N: None, P: Passive, A: Active */;
-	confidentialityImpact: "N" | "L" | "H" /** N: None, L: Low, H: High */;
-}) => {
-	// Generate CVSS vector
-	const cvssVector = `AV:${accessVector}/AC:${accessComplexity}/PR:${privilegesRequired}/UI:${userInteraction}/S:${attackRequirements}/VI:N/VA:N/SC:N/SI:N/SA:N`;
+export const generateCVSS = (cvssVector: string) => {
+	// Validate the input CVSS vector
+	const validationResult: ValidationResult = validate(cvssVector);
 
-	// calculate CVSS score
-	const cvssCalc = new Cvss4P0(cvssVector);
+	if (!validationResult.versionStr) {
+		throw new Error("Invalid CVSS vector: Version not detected.");
+	}
 
-	const score = cvssCalc.calculateScores().overall;
+	if (!validationResult.metricsMap) {
+		throw new Error("Invalid CVSS vector: Metrics map is missing.");
+	}
+
+	const { metricsMap, isTemporal, isEnvironmental } = validationResult;
+
+	// Calculate Base Score
+	const baseScore = calculateBaseScore(cvssVector);
+
+	// Calculate Exploitability Score
+	const exploitabilityScore = calculateExploitability(metricsMap);
+
+	// Calculate ISS (Impact Subscore)
+	const iss = calculateIss(metricsMap);
+
+	// Calculate Impact Score
+	const impactScore = calculateImpact(metricsMap, iss);
+
+	// Generate Temporal and Environmental Scores (if applicable)
+	let temporalScore: number | null = null;
+	let environmentalScore: number | null = null;
+
+	if (isTemporal) {
+		const temporalMetrics = Array.from(metricsMap.entries())
+			.filter(([key]) =>
+				Object.values(TemporalMetric).includes(key as TemporalMetric),
+			)
+			.reduce(
+				(acc, [key, value]) => {
+					acc[key as Metric] = value;
+					return acc;
+				},
+				{} as Record<Metric, MetricValue>,
+			);
+
+		temporalScore = calculateBaseScore(
+			cvssVector.replace(/(\/[A-Z]+:[A-Z]+)?$/, "") + temporalMetrics,
+		);
+	}
+
+	if (isEnvironmental) {
+		const environmentalMetrics = Array.from(metricsMap.entries())
+			.filter(([key]) =>
+				Object.values(EnvironmentalMetric).includes(key as EnvironmentalMetric),
+			)
+			.reduce(
+				(acc, [key, value]) => {
+					acc[key as Metric] = value;
+					return acc;
+				},
+				{} as Record<Metric, MetricValue>,
+			);
+
+		environmentalScore = calculateBaseScore(
+			cvssVector.replace(/(\/[A-Z]+:[A-Z]+)?$/, "") + environmentalMetrics,
+		);
+	}
 
 	return {
-		score,
-		level: getLevelOfVulnerability(score),
+		baseScore,
+		impactScore,
+		exploitabilityScore,
+		temporalScore,
+		environmentalScore,
+		metricsMap: Array.from(metricsMap.entries()).map(([metric, value]) => ({
+			metric: humanizeBaseMetric(metric),
+			value: humanizeBaseMetricValue(value, metric),
+		})),
+		severity: getLevelOfVulnerability(baseScore),
 	};
 };
 
