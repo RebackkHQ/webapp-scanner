@@ -25,13 +25,3 @@ export {
 	type SupportedDatabases,
 };
 export { PortsScanner, type PortsScannerOpts };
-
-const scanner = new PortsScanner({
-	spiderResults: ["https://example.com"],
-	fromPort: 1,
-	toPort: 8080,
-});
-
-scanner.scan().then((results) => {
-	console.log(results);
-});
