@@ -102,7 +102,7 @@ export const sqliCommand: CommandModule = {
 				await fs.readFile(spiderResultsPath, "utf-8"),
 			);
 
-			cliLogger.info("Starting XSS scan on website");
+			cliLogger.info("Starting SQLI scan on website");
 
 			const scanner = new SqliScanner({
 				spiderResults,
