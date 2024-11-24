@@ -1,23 +1,25 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ArgumentsCamelCase, CommandModule } from "yargs";
-import { HeaderScanner, XSSScanner } from "../index.js";
+import { PortsScanner } from "../index.js";
 import { createLogger } from "../utils/index.js";
 
-export type HeaderScannerCLIOpts = {
+export type PortScannerCLIOpts = {
 	spiderResults: string;
-	retries?: number;
-	timeout?: number;
+	fromPort?: number;
+	toPort?: number;
+	allowList?: Array<number>;
 	concurrency?: number;
+	timeout?: number;
 	output?: string;
 };
 
 const cliLogger = createLogger("CLI");
 
-export const headerCommand: CommandModule = {
-	command: "header",
+export const portsCommand: CommandModule = {
+	command: "ports",
 	describe:
-		"Check a website for Header vulnerabilities. Checks for security and information leak headers",
+		"Check a website for Open Port vulnerabilities. Check the ports between the specified range for open ports",
 	builder: (yargs) => {
 		return yargs
 			.option("spiderResults", {
@@ -73,22 +75,44 @@ export const headerCommand: CommandModule = {
 					return timeout;
 				},
 			})
-			.option("retries", {
-				alias: "r",
+			.option("fromPort", {
+				alias: "fp",
 				type: "number",
-				description: "The number of retries for each request",
+				description: "The starting port to scan",
 				default: 3,
-				coerce: (retries) => {
-					if (retries < 0 || retries > 10) {
-						throw new Error("Retries must be between 0 and 10");
+				coerce: (fromPort) => {
+					if (fromPort < 1 || fromPort > 65535) {
+						throw new Error("Port must be between 1 and 65,535");
 					}
-					return retries;
+				},
+			})
+			.option("toPort", {
+				alias: "tp",
+				type: "number",
+				description: "The ending port to scan",
+				default: 8080,
+				coerce: (toPort) => {
+					if (toPort < 1 || toPort > 65535) {
+						throw new Error("Port must be between 1 and 65,535");
+					}
+				},
+			})
+			.option("allowList", {
+				alias: "al",
+				type: "array",
+				description: "A list of ports to allow",
+				default: [22, 80, 443],
+				coerce: (allowList) => {
+					if (!Array.isArray(allowList)) {
+						throw new Error("Allow list must be an array");
+					}
+					return allowList;
 				},
 			});
 	},
 	handler: async (args) => {
 		try {
-			const argData = args as ArgumentsCamelCase<HeaderScannerCLIOpts>;
+			const argData = args as ArgumentsCamelCase<PortScannerCLIOpts>;
 			const spiderResultsPath = path.resolve(argData.spiderResults);
 
 			// Check if the spider results file exists
@@ -102,15 +126,16 @@ export const headerCommand: CommandModule = {
 				await fs.readFile(spiderResultsPath, "utf-8"),
 			);
 
-			cliLogger.info("Starting Header scan on website");
+			cliLogger.info("Starting Port scan on website");
 
-			const scanner = new HeaderScanner({
+			const scanner = new PortsScanner({
 				spiderResults,
-				concurrency: argData.concurrency ?? 10,
-				timeout: argData.timeout ?? 5000,
-				retries: argData.retries ?? 3,
+				fromPort: argData.fromPort ?? 1,
+				toPort: argData.toPort ?? 65535,
+				allowList: argData.allowList ?? [22, 80, 443],
+				concurrency: argData.concurrency ?? 30,
+				timeout: argData.timeout ?? 10000,
 			});
-
 			const results = await scanner.scan();
 
 			const outputPath = argData.output || getDefaultFilePath();
@@ -120,7 +145,7 @@ export const headerCommand: CommandModule = {
 			if (error instanceof Error) {
 				cliLogger.error(`Error: ${error.message}`);
 			}
-			cliLogger.error("Failed to run XSS command");
+			cliLogger.error("Failed to run Port Scan command");
 			process.exit(1);
 		}
 	},
@@ -146,5 +171,5 @@ const getDefaultFilePath = () => {
 		process.exit(1);
 	});
 
-	return path.resolve(resolvedDir, `headerResults_${Date.now()}.json`);
+	return path.resolve(resolvedDir, `portsResults_${Date.now()}.json`);
 };

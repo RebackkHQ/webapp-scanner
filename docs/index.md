@@ -73,7 +73,8 @@ By using Sentinel, you agree to our [DISCLAIMER]({{ site.url }}{{ site.baseurl }
   - [Vulnerability Details]({{ site.url }}{{ site.baseurl }}/headers/details)
 - [SQL Injection Scanner]({{ site.url }}{{ site.baseurl }}/sql-injection/)
   - [Vulnerability Details]({{ site.url }}{{ site.baseurl }}/sql-injection/details)
-- [Scoring]({{ site.url }}{{ site.baseurl }}/scoring/
+- [Ports Scanning]({{ site.url }}{{ site.baseurl }}/ports/)
+- [Scoring]({{ site.url }}{{ site.baseurl }}/scoring/)
 - [Disclaimer]({{ site.url }}{{ site.baseurl }}/disclaimer)
 
 <div align="center">
