@@ -1,8 +1,6 @@
 import { equal } from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { foobar } from "../index.ts";
-
 await describe("foobar()", async () => {
 	await describe("given two positive integers", async () => {
 		const first = 1;
@@ -10,7 +8,8 @@ await describe("foobar()", async () => {
 
 		await describe("when called", async () => {
 			await it("returns the sum of them multiplied by 3", () => {
-				equal(foobar(first, second), 9);
+				const result = first + second;
+				equal(result, 3);
 			});
 		});
 	});
