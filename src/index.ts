@@ -1,27 +1,6 @@
-import HeaderScanner, {
-	type HeadersData,
-	type HeaderScannerOptions,
-} from "./modules/headers/index.js";
-import PortsScanner, { type PortsScannerOpts } from "./modules/ports/index.js";
-import SpiderScanner, {
-	type SpiderScannerOptions,
-} from "./modules/spider/index.js";
-import SqliScanner, {
-	type SqliConstructorOpts,
-	type SQLErrors,
-	type SupportedDatabases,
-} from "./modules/sqli/index.js";
-import XSSScanner, { type XSSConstructorOpts } from "./modules/xss/index.js";
-import { Vulnerability } from "./utils/types.js";
+import { bar } from "./bar.ts";
+import { foo } from "./foo.ts";
 
-export { SpiderScanner, type SpiderScannerOptions };
-export { XSSScanner, type XSSConstructorOpts };
-export { Vulnerability };
-export { HeaderScanner, type HeadersData, type HeaderScannerOptions };
-export {
-	SqliScanner,
-	type SqliConstructorOpts,
-	type SQLErrors,
-	type SupportedDatabases,
-};
-export { PortsScanner, type PortsScannerOpts };
+export function foobar(a: number, b: number) {
+	return foo().repeat(a).length + bar().repeat(b).length;
+}

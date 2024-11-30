@@ -1,74 +1,77 @@
-<p align="center" style="margin-top: 10px">
-  <h1 align="center">
-    Sentinel By Rebackk (Work in progress)
-    <br />
-    <img src="https://img.shields.io/github/actions/workflow/status/RebackkHQ/webapp-scanner/.github%2Fworkflows%2Fwebapp-scanner.yml" style="padding-top: 15px;" />
-    <img src="https://img.shields.io/github/contributors/RebackkHQ/webapp-scanner" style="padding-top: 15px;" />
-    <img src="https://img.shields.io/github/issues-raw/RebackkHQ/webapp-scanner" style="padding-top: 15px;" />
-    <img src="https://img.shields.io/github/v/release/RebackkHQ/webapp-scanner?include_prereleases" style="padding-top: 15px;" />
-    <img src="https://img.shields.io/npm/dw/sentinel-scanner" style="padding-top: 15px;" />
-    <div>
-      <img src="https://img.shields.io/github/stars/RebackkHQ/webapp-scanner" style="padding-top: 15px;" />
-    </div>
-  </h3>
-  <p align="center">
-    <a href="https://www.sentinel.rebackk.xyz">
-        <img src='https://raw.githubusercontent.com/RebackkHQ/webapp-scanner/main/.github/assets/header.png'>
-    </a>
-  </a>
-  </p>
+# TypeScript Library Starter
 
-  <p align="center">
-    Open Source WebApp Vulnerability Scanner
-    <br />
-    <a href="https://www.sentinel.rebackk.xyz"><strong>Learn more »</strong></a>
-    <br />
-    <br />
-    <a href="https://discord.gg/dCkyNUFm">Discord</a>
-    ·
-    <a href="https://www.sentinel.rebackk.xyz?ref=SentinelGithub">Website</a>
-    ·
-    <a href="https://github.com/RebackkHQ/webapp-scanner/issues">Issues</a>
-  </p>
-</p>
+![NPM](https://img.shields.io/npm/l/@gjuchault/typescript-library-starter)
+![NPM](https://img.shields.io/npm/v/@gjuchault/typescript-library-starter)
+![GitHub Workflow Status](https://github.com/gjuchault/typescript-library-starter/actions/workflows/typescript-library-starter.yml/badge.svg?branch=main)
 
-## About Sentinel Web App Scanner 🛡️
+Yet another (opinionated) TypeScript library starter template.
 
-Sentinel is an open-source web app vulnerability scanner developed by [Rebackk](https://rebackk.xyz), offering powerful capabilities to help developers and security teams detect critical vulnerabilities. While the open-source version includes essential features for vulnerability scanning, our monthly plans provide an enhanced, professional-grade experience, featuring advanced scans, automation capabilities, and more insights tailored for robust security requirements.
+If you're looking for a backend service starter, check out my [typescript-service-starter](https://github.com/gjuchault/typescript-service-starter)
 
-### 🔓 Try the Free Version, Upgrade for More
+## Opinions and limitations
 
-This open-source edition gives you access to basic but valuable security scanning capabilities. For a more comprehensive experience, consider exploring Sentinel’s [monthly subscription plans](https://sentinel.rebackk.xyz), offering:
+1. Relies as much as possible on each included library's defaults
+2. Only relies on GitHub Actions
+3. Does not include documentation generation
 
-- **Enhanced Vulnerability Coverage**: Access to additional checks for deeper and broader vulnerability scanning.
+## Getting started
 
-- **Automated Scanning**: Schedule scans regularly to maintain your application’s security posture.
+1. `npx degit gjuchault/typescript-library-starter my-project` or click on the `Use this template` button on GitHub!
+2. `cd my-project`
+3. `npm install`
+4. `git init` (if you used degit)
+5. `node --run setup`
 
-- **Premium Support**: Get priority assistance from our expert team.
+To enable deployment, you will need to:
 
-- **Advanced Reporting and Analytics**: Gain in-depth insights into vulnerabilities and potential risks.
+1. Set up the `NPM_TOKEN` secret in GitHub Actions ([Settings > Secrets > Actions](https://github.com/gjuchault/typescript-library-starter/settings/secrets/actions))
+2. Give `GITHUB_TOKEN` write permissions for GitHub releases ([Settings > Actions > General](https://github.com/gjuchault/typescript-library-starter/settings/actions) > Workflow permissions)
 
-- **Integration Options**: Connect seamlessly with CI/CD pipelines, DevOps tools, and cloud services.
+## Features
 
-The free, open-source version of Sentinel is perfect for getting started, but when you’re ready for more power, our [paid plans](https://sentinel.rebackk.xyz) are here to take your security to the next level!
+### Node.js, npm version
 
-Happy Scanning! 🛡️
+TypeScript Library Starter relies on [Volta](https://volta.sh/) to ensure the Node.js version is consistent across developers. It's also used in the GitHub workflow file.
 
-## Contributing 🤝
-If you want to help us building the best status page and alerting system, you can check our [contributing guidelines](./CODE_OF_CONDUCT.md)
+### TypeScript
 
-## Disclaimer
+Leverages [esbuild](https://github.com/evanw/esbuild) for blazing-fast builds but keeps `tsc` to generate `.d.ts` files.
+Generates a single ESM build.
 
-By using Sentinel, you agree to the terms outlined in our [DISCLAIMER](./DISCLAIMER.md). It is **strongly recommended** that you read the disclaimer thoroughly before using this tool. 
+Commands:
 
-**Key points include:**
+- `build`: runs type checking, then ESM and `d.ts` files in the `build/` directory
+- `clean`: removes the `build/` directory
+- `type:check`: runs type checking
 
-- Only scan systems for which you have explicit permission.
-- The tool is provided "as is" without any warranties.
-- The company is not liable for any misuse, damages, or legal issues arising from the use of this tool.
+### Tests
 
-You can find the full disclaimer [here](./DISCLAIMER.md).
+TypeScript Library Starter uses [Node.js's native test runner](https://nodejs.org/api/test.html). Coverage is done using [c8](https://github.com/bcoe/c8) but will switch to Node.js's one once out.
 
----
+Commands:
 
-**This is a work in progress project**
+- `test`: runs test runner
+- `test:watch`: runs test runner in watch mode
+- `test:coverage`: runs test runner and generates coverage reports
+
+### Format & lint
+
+This template relies on [Biome](https://biomejs.dev/) to do both formatting & linting in no time.
+It also uses [cspell](https://github.com/streetsidesoftware/cspell) to ensure correct spelling.
+
+Commands:
+
+- `lint`: runs Biome with automatic fixing
+- `lint:check`: runs Biome without automatic fixing (used in CI)
+- `spell:check`: runs spell checking
+
+### Releasing
+
+Under the hood, this library uses [semantic-release](https://github.com/semantic-release/semantic-release) and [Commitizen](https://github.com/commitizen/cz-cli).
+The goal is to avoid manual release processes. Using `semantic-release` will automatically create a GitHub release (hence tags) as well as an npm release.
+Based on your commit history, `semantic-release` will automatically create a patch, feature, or breaking release.
+
+Commands:
+
+- `cz`: interactive CLI that helps you generate a proper git commit message, using [Commitizen](https://github.com/commitizen/cz-cli)
+- `semantic-release`: triggers a release (used in CI)
