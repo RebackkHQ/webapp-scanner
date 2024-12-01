@@ -1,5 +1,8 @@
 # Contributor Covenant Code of Conduct
 
+## Disclaimer
+Please Check Our Disclaimer [Here](./DISCLAIMER.md)
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our
