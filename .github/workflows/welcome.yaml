@@ -1,5 +1,7 @@
 name: "Welcome New Contributors"
 
+permissions: "write-all"
+
 on:
   issues:
     types: [opened]
