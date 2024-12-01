@@ -1,5 +1,7 @@
 name: webapp-scanner
 
+permissions: "write-all"
+
 on: [push]
 
 env:
