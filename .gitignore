@@ -1,4 +1,22 @@
 build/
 node_modules/
 coverage/
+
+# Code Editor
+.vscode/
+.idea/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Database
+data/
+*.db
+
+# Output
+sentinel_output/
