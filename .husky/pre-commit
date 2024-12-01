@@ -9,8 +9,8 @@ STAGED_FILES="$STAGED_FILES"$'\n'"$BIOME_FILE"
 
 # Exit early if no relevant files are staged
 if [ -z "$STAGED_FILES" ]; then
-    echo "No relevant files to check."
-    exit 0
+	echo "No relevant files to check."
+	exit 0
 fi
 
 # Create a temporary file to store the file list
@@ -26,10 +26,10 @@ rm "$TEMP_FILE"
 
 # If Biome made changes, add them back to staging
 if [ $CHECK_RESULT -eq 0 ]; then
-    echo "$STAGED_FILES" | xargs git add
+	echo "$STAGED_FILES" | xargs git add
 
-    exit 0
+	exit 0
 else
-    echo "Biome check failed. Please fix the issues and try again."
-    exit 1
+	echo "Biome check failed. Please fix the issues and try again."
+	exit 1
 fi

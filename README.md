@@ -1,4 +1,9 @@
 <p align="center" style="margin-top: 10px">
+<p align="center">
+    <a href="https://www.npmjs.com/package/sniffa">
+        <img src='https://sentinel.rebackk.xyz/images/logo.png' height="100px" width="100px">
+    </a>
+  </p>
   <h1 align="center">
     Sentinel By Rebackk (Work in progress)
     <br />
