@@ -33,19 +33,19 @@ export const spiderCommand: CommandModule = {
 				alias: "d",
 				describe: "The maximum depth to crawl",
 				type: "number",
-				default: 1,
+				default: 250,
 			})
 			.option("maxRetries", {
 				alias: "r",
 				describe: "The maximum retries for a failed request",
 				type: "number",
-				default: 1,
+				default: 3,
 			})
 			.option("concurrency", {
 				alias: "c",
 				describe: "The number of concurrent requests",
 				type: "number",
-				default: 1,
+				default: 30,
 			})
 			.option("ignoreExternalLinks", {
 				alias: "i",
@@ -57,7 +57,7 @@ export const spiderCommand: CommandModule = {
 				alias: "t",
 				describe: "Request timeout in milliseconds",
 				type: "number",
-				default: 1000,
+				default: 8000,
 			})
 			.option("output", {
 				alias: "o",
@@ -78,11 +78,14 @@ export const spiderCommand: CommandModule = {
 		}>;
 		const opts: SpiderConstructorOptions = {
 			seed: args.seed,
-			maxDepth: args.maxDepth,
-			maxRetries: args.maxRetries,
-			concurrency: args.concurrency,
-			ignoreExternalLinks: args.ignoreExternalLinks,
-			timeout: args.timeout,
+			maxDepth: args.maxDepth || 250,
+			maxRetries: args.maxRetries || 3,
+			concurrency: args.concurrency || 30,
+			ignoreExternalLinks:
+				args.ignoreExternalLinks === undefined
+					? true
+					: args.ignoreExternalLinks,
+			timeout: args.timeout || 8000,
 		};
 
 		const scanner = new Spider(opts);
