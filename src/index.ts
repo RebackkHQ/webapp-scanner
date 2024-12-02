@@ -1,27 +1,24 @@
-import HeaderScanner, {
-	type HeadersData,
-	type HeaderScannerOptions,
-} from "./modules/headers/index.js";
-import PortsScanner, { type PortsScannerOpts } from "./modules/ports/index.js";
-import SpiderScanner, {
-	type SpiderScannerOptions,
-} from "./modules/spider/index.js";
-import SqliScanner, {
-	type SqliConstructorOpts,
-	type SQLErrors,
-	type SupportedDatabases,
-} from "./modules/sqli/index.js";
-import XSSScanner, { type XSSConstructorOpts } from "./modules/xss/index.js";
-import { Vulnerability } from "./utils/types.js";
+#!/usr/bin/env node --no-warnings
 
-export { SpiderScanner, type SpiderScannerOptions };
-export { XSSScanner, type XSSConstructorOpts };
-export { Vulnerability };
-export { HeaderScanner, type HeadersData, type HeaderScannerOptions };
-export {
-	SqliScanner,
-	type SqliConstructorOpts,
-	type SQLErrors,
-	type SupportedDatabases,
-};
-export { PortsScanner, type PortsScannerOpts };
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+import { spiderCommand } from "./commands/spider.ts";
+import { getPackageData } from "./utils/index.ts";
+
+const { name, version } = getPackageData();
+
+const commandHandler = yargs(hideBin(process.argv));
+
+commandHandler.demandCommand();
+commandHandler.version(version);
+commandHandler.scriptName(name);
+commandHandler.usage("Usage: $0 <command> [options]");
+commandHandler.help().alias("help", "h");
+commandHandler.version().alias("version", "v");
+commandHandler.strict();
+commandHandler.showHelpOnFail(true);
+
+commandHandler.command(spiderCommand);
+
+commandHandler.version().alias("version", "v");
+commandHandler.parse();
